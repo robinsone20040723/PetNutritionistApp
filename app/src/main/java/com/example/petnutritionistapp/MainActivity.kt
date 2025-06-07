@@ -14,8 +14,10 @@ class MainActivity : AppCompatActivity() {
         val btnStart = findViewById<Button>(R.id.btnStart)
 
         btnBCS.setOnClickListener {
-            // TODO: 開啟 BCS 介紹畫面
+            val intent = Intent(this, BCSIntroductionActivity::class.java)
+            startActivity(intent)
         }
+
 
         btnStart.setOnClickListener {
             // TODO: 開啟狗狗分析頁面
