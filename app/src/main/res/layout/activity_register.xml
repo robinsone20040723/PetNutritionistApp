@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D7B2A3"
+    android:background="#FBE9E7"
     android:padding="24dp">
 
     <LinearLayout
@@ -11,25 +11,15 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/dog_sample"
-            android:layout_marginTop="48dp"
-            android:contentDescription="App Logo" />
-
         <TextView
-            android:id="@+id/welcomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WELCOME BACK"
-            android:textSize="22sp"
+            android:text="註冊帳號"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:textColor="#3E2723" />
+            android:textColor="#5D4037"
+            android:layout_marginBottom="24dp"/>
 
-        <!-- Email 輸入 -->
         <EditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
@@ -37,10 +27,9 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:drawableLeft="@android:drawable/ic_dialog_email"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#4E342E" />
+            android:backgroundTint="#6D4C41"
+            android:layout_marginBottom="16dp"/>
 
-        <!-- 密碼輸入 -->
         <EditText
             android:id="@+id/passwordInput"
             android:layout_width="match_parent"
@@ -48,32 +37,35 @@
             android:hint="密碼"
             android:inputType="textPassword"
             android:drawableLeft="@android:drawable/ic_lock_lock"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#4E342E" />
+            android:backgroundTint="#6D4C41"
+            android:layout_marginBottom="16dp"/>
 
-        <!-- 登入按鈕 -->
-        <Button
-            android:id="@+id/loginButton"
+        <EditText
+            android:id="@+id/confirmPasswordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="登入"
-            android:textStyle="bold"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/rounded_button"
-            android:textColor="#FFFFFF"
-            android:elevation="4dp" />
+            android:hint="再次輸入密碼"
+            android:inputType="textPassword"
+            android:drawableLeft="@android:drawable/ic_lock_lock"
+            android:backgroundTint="#6D4C41"
+            android:layout_marginBottom="24dp"/>
 
-        <!-- 註冊按鈕 -->
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="註冊"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/rounded_button"
             android:textColor="#FFFFFF"
-            android:elevation="4dp" />
+            android:background="@drawable/rounded_button"
+            android:textStyle="bold"/>
 
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="返回登入"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_button" />
     </LinearLayout>
 </ScrollView>

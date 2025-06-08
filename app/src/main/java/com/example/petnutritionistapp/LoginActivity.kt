@@ -24,7 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
 
         registerBtn.setOnClickListener {
-            // TODO: 未來導向註冊頁面
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
+
     }
 }
