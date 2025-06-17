@@ -7,15 +7,24 @@
     android:layout_height="match_parent"
     android:background="#FFFDE7">
 
+    <ImageView
+        android:id="@+id/ivDogImage"
+        android:layout_width="308dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:contentDescription="狗狗圖片"
+        android:scaleType="centerCrop" />
+
+
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="分析結果"
-        android:textSize="24sp"
-        android:textStyle="bold"
         android:textColor="#5D4037"
-        android:layout_marginBottom="16dp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvSuggestion"

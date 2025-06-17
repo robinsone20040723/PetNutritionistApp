@@ -1,22 +1,36 @@
 package com.example.petnutritionistapp
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.google.firebase.firestore.FirebaseFirestore
 
 class BCSResultActivity : AppCompatActivity() {
+
+    private lateinit var ivDogImage: ImageView
+    private lateinit var tvResult: TextView
+    private lateinit var tvSuggestion: TextView
+    private lateinit var btnMeal: Button
+    private lateinit var btnDisease: Button
+    private lateinit var db: FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bcs_result)
 
-        val tvResult = findViewById<TextView>(R.id.tvResult)
-        val tvSuggestion = findViewById<TextView>(R.id.tvSuggestion)
-        val btnMeal = findViewById<Button>(R.id.btnMeal)
-        val btnDisease = findViewById<Button>(R.id.btnDisease)
+        // 初始化元件
+        ivDogImage = findViewById(R.id.ivDogImage)
+        tvResult = findViewById(R.id.tvResult)
+        tvSuggestion = findViewById(R.id.tvSuggestion)
+        btnMeal = findViewById(R.id.btnMeal)
+        btnDisease = findViewById(R.id.btnDisease)
+        db = FirebaseFirestore.getInstance()
 
         val bcsIndex = intent.getIntExtra("BCS_INDEX", -1)
+        val breedName = intent.getStringExtra("BREED_NAME") ?: ""
 
+        // 顯示 BCS 結果
         val resultText: String
         val suggestionText: String
 
@@ -49,6 +63,26 @@ class BCSResultActivity : AppCompatActivity() {
 
         tvResult.text = resultText
         tvSuggestion.text = suggestionText
+
+        // 讀取圖片
+        if (breedName.isNotEmpty()) {
+            db.collection("breedImages")
+                .document(breedName)
+                .get()
+                .addOnSuccessListener { doc ->
+                    val imageUrl = doc.getString("imageUrl")
+                    if (!imageUrl.isNullOrEmpty()) {
+                        Glide.with(this)
+                            .load(imageUrl)
+                            .into(ivDogImage)
+                    } else {
+                        Toast.makeText(this, "找不到圖片連結", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "讀取圖片失敗", Toast.LENGTH_SHORT).show()
+                }
+        }
 
         btnMeal.setOnClickListener {
             // TODO: 跳轉到配餐建議畫面

@@ -94,6 +94,7 @@ class DogInputActivity : AppCompatActivity() {
                     Toast.makeText(this, "✅ 資料已上傳", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, BCSResultActivity::class.java)
                     intent.putExtra("BCS_INDEX", spinnerBCS.selectedItemPosition)
+                    intent.putExtra("BREED_NAME", breed)
                     startActivity(intent)
                 }
                 .addOnFailureListener { e ->
