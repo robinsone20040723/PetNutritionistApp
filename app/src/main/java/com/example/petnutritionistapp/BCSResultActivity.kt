@@ -5,6 +5,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Intent
+
 
 class BCSResultActivity : AppCompatActivity() {
 
@@ -33,6 +35,8 @@ class BCSResultActivity : AppCompatActivity() {
         // 顯示 BCS 結果
         val resultText: String
         val suggestionText: String
+        val selectedBreed = intent.getStringExtra("DOG_BREED") ?: "未知品種"
+
 
         when (bcsIndex) {
             0, 1 -> {
@@ -85,8 +89,13 @@ class BCSResultActivity : AppCompatActivity() {
         }
 
         btnMeal.setOnClickListener {
-            // TODO: 跳轉到配餐建議畫面
+            val intent = Intent(this, MealPlanActivity::class.java)
+            intent.putExtra("DOG_BREED", selectedBreed) // ✅ 現在這行會正常
+            intent.putExtra("BCS_INDEX", bcsIndex)
+            startActivity(intent)
         }
+
+
 
         btnDisease.setOnClickListener {
             // TODO: 跳轉到常見疾病畫面

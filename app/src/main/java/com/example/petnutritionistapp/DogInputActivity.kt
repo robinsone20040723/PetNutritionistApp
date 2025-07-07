@@ -95,6 +95,9 @@ class DogInputActivity : AppCompatActivity() {
                     val intent = Intent(this, BCSResultActivity::class.java)
                     intent.putExtra("BCS_INDEX", spinnerBCS.selectedItemPosition)
                     intent.putExtra("BREED_NAME", breed)
+
+                    intent.putExtra("DOG_BREED", breed)
+
                     startActivity(intent)
                 }
                 .addOnFailureListener { e ->
