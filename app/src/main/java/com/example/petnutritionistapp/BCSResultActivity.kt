@@ -98,7 +98,11 @@ class BCSResultActivity : AppCompatActivity() {
 
 
         btnDisease.setOnClickListener {
-            // TODO: 跳轉到常見疾病畫面
+            val intent = Intent(this, DiseaseActivity::class.java)
+            intent.putExtra("DOG_BREED", selectedBreed) // 傳入狗的品種
+            startActivity(intent)
         }
+
     }
 }
+

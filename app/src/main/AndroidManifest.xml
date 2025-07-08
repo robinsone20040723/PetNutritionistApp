@@ -10,6 +10,9 @@
         android:theme="@style/Theme.PetNutritionistApp"
         tools:targetApi="31">
         <activity
+            android:name=".DiseaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".MealPlanActivity"
             android:exported="false" />
         <activity
