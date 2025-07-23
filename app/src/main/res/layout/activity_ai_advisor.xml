@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/inputQuestion"
+        android:layout_width="368dp"
+        android:layout_height="73dp"
+        android:background="@android:drawable/editbox_background"
+        android:hint="請輸入您的問題"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnAsk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="詢問 AI 顧問"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="這裡會顯示回覆"
+        android:paddingTop="24dp"
+        android:textSize="16sp" />
+
+</LinearLayout>

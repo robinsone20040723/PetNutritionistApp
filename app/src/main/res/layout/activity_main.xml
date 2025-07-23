@@ -57,5 +57,14 @@
             android:background="@drawable/rounded_button"
             android:textStyle="bold"
             android:layout_marginBottom="32dp" />
+
+        <Button
+            android:id="@+id/btnAIAdvisor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI 顧問"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+
     </LinearLayout>
 </ScrollView>
