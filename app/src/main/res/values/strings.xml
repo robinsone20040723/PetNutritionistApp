@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">PetNutritionistApp</string>
+
+    <string-array name="ribs_array">
+        <item>清楚可摸到肋骨</item>
+        <item>需按壓才摸到</item>
+        <item>摸不到肋骨</item>
+    </string-array>
+
+    <string-array name="waist_array">
+        <item>腰身明顯</item>
+        <item>腰身略可見</item>
+        <item>無腰身</item>
+    </string-array>
+
+    <string-array name="stomach_array">
+        <item>腹部上提</item>
+        <item>腹部平坦</item>
+        <item>腹部下垂</item>
+    </string-array>
+    <string name="photo_instruction">拍攝狗狗並描述觸感</string>
+    <string name="take_photo">拍照</string>
+    <string name="analyze_bcs">確認分析</string>
+    <string name="photo_preview_desc">狗狗照片預覽</string>
+    <string name="ribs_label">肋骨觸感：</string>
+    <string name="waist_label">腰部線條：</string>
+    <string name="stomach_label">腹部輪廓：</string>
+
 </resources>

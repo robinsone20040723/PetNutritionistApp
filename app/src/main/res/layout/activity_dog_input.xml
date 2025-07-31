@@ -22,30 +22,25 @@
         <Spinner
             android:id="@+id/spinnerSize"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="59dp"
             android:layout_marginBottom="16dp" />
 
         <!-- 品種選單 -->
         <Spinner
             android:id="@+id/spinnerBreed"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
-
-        <!-- BCS 描述選單 -->
-        <Spinner
-            android:id="@+id/spinnerBCS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginBottom="32dp" />
 
+        <!-- 開始拍照按鈕 -->
         <Button
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="確認並分析"
+            android:text="開始拍照"
             android:background="@drawable/rounded_button"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
     </LinearLayout>
 </ScrollView>
