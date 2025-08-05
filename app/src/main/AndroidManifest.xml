@@ -16,25 +16,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".AIAdvisorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DiseaseActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MealPlanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BCSResultActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DogInputActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BCSIntroductionActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

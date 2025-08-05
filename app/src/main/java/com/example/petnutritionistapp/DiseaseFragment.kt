@@ -1,26 +1,32 @@
 package com.example.petnutritionistapp
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 
-class DiseaseActivity : AppCompatActivity() {
+class DiseaseFragment : Fragment() {
 
     private lateinit var tvDiseaseTitle: TextView
     private lateinit var tvPrevention: TextView
     private lateinit var db: FirebaseFirestore
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_disease)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_disease, container, false)
 
-        tvDiseaseTitle = findViewById(R.id.tvDiseaseTitle)
-        tvPrevention = findViewById(R.id.tvPrevention)
+        tvDiseaseTitle = view.findViewById(R.id.tvDiseaseTitle)
+        tvPrevention = view.findViewById(R.id.tvPrevention)
         db = FirebaseFirestore.getInstance()
 
-        val selectedBreed = intent.getStringExtra("DOG_BREED")
+        val selectedBreed = arguments?.getString("DOG_BREED")
 
         if (selectedBreed != null) {
             db.collection("commonDiseases")
@@ -33,14 +39,16 @@ class DiseaseActivity : AppCompatActivity() {
                         tvDiseaseTitle.text = "疾病：$disease"
                         tvPrevention.text = "預防建議：$prevention"
                     } else {
-                        Toast.makeText(this, "找不到該品種疾病資料", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "找不到該品種疾病資料", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "讀取資料失敗：${it.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "讀取資料失敗：${it.message}", Toast.LENGTH_LONG).show()
                 }
         } else {
-            Toast.makeText(this, "未提供品種資料", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "未提供品種資料", Toast.LENGTH_SHORT).show()
         }
+
+        return view
     }
 }

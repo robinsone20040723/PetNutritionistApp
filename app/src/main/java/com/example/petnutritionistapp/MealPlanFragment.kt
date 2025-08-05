@@ -1,29 +1,31 @@
 package com.example.petnutritionistapp
 
 import android.os.Bundle
-import android.widget.TextView
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MealPlanActivity : AppCompatActivity() {
+class MealPlanFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
-    private lateinit var tvMealSuggestion: TextView  // 顯示建議的 TextView
+    private lateinit var tvMealSuggestion: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_meal_plan)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_meal_plan, container, false)
 
-        // 初始化 Firebase
+        tvMealSuggestion = view.findViewById(R.id.tvMealSuggestion)
         db = FirebaseFirestore.getInstance()
 
-        // 綁定 UI 元件
-        tvMealSuggestion = findViewById(R.id.tvMealSuggestion)
-
-        // 接收品種與 BCS
-        val breed = intent.getStringExtra("DOG_BREED") ?: ""
-        val bcsIndex = intent.getIntExtra("BCS_INDEX", -1) + 1  // +1 轉換成 1~9
+        val breed = arguments?.getString("DOG_BREED") ?: ""
+        val bcsIndex = (arguments?.getInt("BCS_INDEX") ?: -1) + 1  // +1 對應 1~9
 
         if (breed.isNotEmpty() && bcsIndex in 1..9) {
             val docId = "${breed}_$bcsIndex"
@@ -39,10 +41,12 @@ class MealPlanActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     tvMealSuggestion.text = "讀取資料失敗：${e.message}"
-                    Log.e("MealPlanActivity", "Firebase 錯誤", e)
+                    Log.e("MealPlanFragment", "Firebase 錯誤", e)
                 }
         } else {
             tvMealSuggestion.text = "未提供有效的狗狗品種或 BCS。"
         }
+
+        return view
     }
 }

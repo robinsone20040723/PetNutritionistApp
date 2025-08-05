@@ -1,35 +1,88 @@
 package com.example.petnutritionistapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var bottomNav: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnBCS = findViewById<Button>(R.id.btnBCS)
-        val btnStart = findViewById<Button>(R.id.btnStart)
-        val btnAIAdvisor = findViewById<Button>(R.id.btnAIAdvisor) // 🆕 加入 AI 顧問按鈕
+        bottomNav = findViewById(R.id.bottom_nav)
 
-        // 「認識 BCS」按鈕
-        btnBCS.setOnClickListener {
-            val intent = Intent(this, BCSIntroductionActivity::class.java)
-            startActivity(intent)
+        // ✅ 檢查是否要顯示特定 Fragment（例如從 PhotoAndTouchInputActivity 回來）
+        val targetFragment = when (intent.getStringExtra("TARGET_FRAGMENT")) {
+            "BCS_RESULT" -> {
+                val breed = intent.getStringExtra("DOG_BREED") ?: ""
+                val score = intent.getIntExtra("FINAL_BCS_SCORE", -1)
+                BCSResultFragment.newInstance(score, breed)
+            }
+            else -> HomeFragment()
         }
+        loadFragment(targetFragment)
 
-        // 「開始分析狗狗」按鈕 → 導向 DogInputActivity
-        btnStart.setOnClickListener {
-            val intent = Intent(this, DogInputActivity::class.java)
-            startActivity(intent)
+        // 📦 設定底部選單邏輯
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    loadFragment(HomeFragment())
+                    true
+                }
+                R.id.nav_back -> {
+                    onBackPressedDispatcher.onBackPressed()
+                    true
+                }
+                R.id.nav_logout -> {
+                    showLogoutConfirmation()
+                    true
+                }
+                else -> false
+            }
         }
+    }
 
-        // ✅ 「AI 顧問」按鈕 → 導向 AIAdvisorActivity
-        btnAIAdvisor.setOnClickListener {
-            val intent = Intent(this, AIAdvisorActivity::class.java)
-            startActivity(intent)
-        }
+    // 📦 將指定 Fragment 顯示到畫面上
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
+    // 🦾 顯示確認登出對話框
+    private fun showLogoutConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("確認登出")
+            .setMessage("你確定要登出嗎？")
+            .setPositiveButton("是") { _, _ ->
+                performLogout()
+            }
+            .setNegativeButton("否") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    // 🔐 執行登出動作
+    private fun performLogout() {
+        val auth = FirebaseAuth.getInstance()
+        auth.signOut()
+
+        val sharedPrefs: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        sharedPrefs.edit().clear().apply()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

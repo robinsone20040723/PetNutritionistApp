@@ -2,15 +2,18 @@ package com.example.petnutritionistapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.firebase.FirebaseApp
 
-class DogInputActivity : AppCompatActivity() {
+class DogInputFragment : Fragment() {
 
     private lateinit var spinnerSize: Spinner
     private lateinit var spinnerBreed: Spinner
+    private lateinit var btnStartPhoto: Button
 
     private val sizeMap = mapOf(
         "迷你犬" to listOf("吉娃娃", "博美", "馬爾濟斯", "約克夏"),
@@ -19,43 +22,46 @@ class DogInputActivity : AppCompatActivity() {
         "大型犬" to listOf("黃金獵犬", "哈士奇", "拉布拉多", "沙皮犬", "杜賓犬", "大丹犬")
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
-        setContentView(R.layout.activity_dog_input)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        FirebaseApp.initializeApp(requireContext())
+        val view = inflater.inflate(R.layout.fragment_dog_input, container, false)
 
-        spinnerSize = findViewById(R.id.spinnerSize)
-        spinnerBreed = findViewById(R.id.spinnerBreed)
+        spinnerSize = view.findViewById(R.id.spinnerSize)
+        spinnerBreed = view.findViewById(R.id.spinnerBreed)
+        btnStartPhoto = view.findViewById(R.id.btnNext)
 
         val sizeList = sizeMap.keys.toList()
-        spinnerSize.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sizeList)
+        spinnerSize.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, sizeList)
 
         spinnerSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedSize = sizeList[position]
                 val breeds = sizeMap[selectedSize] ?: listOf()
-                spinnerBreed.adapter = ArrayAdapter(this@DogInputActivity, android.R.layout.simple_spinner_dropdown_item, breeds)
+                spinnerBreed.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, breeds)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        // 按鈕 ID 請確保是 activity_dog_input.xml 裡的 btnNext
-        val btnStartPhoto = findViewById<Button>(R.id.btnNext)
         btnStartPhoto.setOnClickListener {
             val size = spinnerSize.selectedItem?.toString() ?: ""
             val breed = spinnerBreed.selectedItem?.toString() ?: ""
 
             if (size.isEmpty() || breed.isEmpty()) {
-                Toast.makeText(this, "請選擇體型與品種", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "請選擇體型與品種", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 跳轉到拍照與觸感選單頁面
-            val intent = Intent(this, PhotoAndTouchInputActivity::class.java)
+            // 跳轉到拍照與觸感頁面
+            val intent = Intent(requireContext(), PhotoAndTouchInputActivity::class.java)
             intent.putExtra("DOG_SIZE", size)
             intent.putExtra("DOG_BREED", breed)
             startActivity(intent)
         }
+
+        return view
     }
 }

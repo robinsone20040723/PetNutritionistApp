@@ -1,14 +1,18 @@
 package com.example.petnutritionistapp
 
 import android.os.Bundle
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
-import android.content.Intent
 
-
-class BCSResultActivity : AppCompatActivity() {
+class BCSResultFragment : Fragment() {
 
     private lateinit var ivDogImage: ImageView
     private lateinit var tvResult: TextView
@@ -17,26 +21,25 @@ class BCSResultActivity : AppCompatActivity() {
     private lateinit var btnDisease: Button
     private lateinit var db: FirebaseFirestore
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bcs_result)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_bcs_result, container, false)
 
-        // 初始化元件
-        ivDogImage = findViewById(R.id.ivDogImage)
-        tvResult = findViewById(R.id.tvResult)
-        tvSuggestion = findViewById(R.id.tvSuggestion)
-        btnMeal = findViewById(R.id.btnMeal)
-        btnDisease = findViewById(R.id.btnDisease)
+        ivDogImage = view.findViewById(R.id.ivDogImage)
+        tvResult = view.findViewById(R.id.tvResult)
+        tvSuggestion = view.findViewById(R.id.tvSuggestion)
+        btnMeal = view.findViewById(R.id.btnMeal)
+        btnDisease = view.findViewById(R.id.btnDisease)
         db = FirebaseFirestore.getInstance()
 
-        val bcsIndex = intent.getIntExtra("BCS_INDEX", -1)
-        val breedName = intent.getStringExtra("BREED_NAME") ?: ""
+        val bcsIndex = arguments?.getInt("FINAL_BCS_SCORE", -1) ?: -1
+        val breedName = arguments?.getString("DOG_BREED") ?: "未知品種"
 
-        // 顯示 BCS 結果
         val resultText: String
         val suggestionText: String
-        val selectedBreed = intent.getStringExtra("DOG_BREED") ?: "未知品種"
-
 
         when (bcsIndex) {
             0, 1 -> {
@@ -76,33 +79,56 @@ class BCSResultActivity : AppCompatActivity() {
                 .addOnSuccessListener { doc ->
                     val imageUrl = doc.getString("imageUrl")
                     if (!imageUrl.isNullOrEmpty()) {
-                        Glide.with(this)
+                        Glide.with(requireContext())
                             .load(imageUrl)
                             .into(ivDogImage)
                     } else {
-                        Toast.makeText(this, "找不到圖片連結", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "找不到圖片連結", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "讀取圖片失敗", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "讀取圖片失敗", Toast.LENGTH_SHORT).show()
                 }
         }
 
         btnMeal.setOnClickListener {
-            val intent = Intent(this, MealPlanActivity::class.java)
-            intent.putExtra("DOG_BREED", selectedBreed) // ✅ 現在這行會正常
-            intent.putExtra("BCS_INDEX", bcsIndex)
-            startActivity(intent)
+            val fragment = MealPlanFragment().apply {
+                arguments = Bundle().apply {
+                    putString("DOG_BREED", breedName)
+                    putInt("BCS_INDEX", bcsIndex)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
         }
-
-
 
         btnDisease.setOnClickListener {
-            val intent = Intent(this, DiseaseActivity::class.java)
-            intent.putExtra("DOG_BREED", selectedBreed) // 傳入狗的品種
-            startActivity(intent)
+            val fragment = DiseaseFragment().apply {
+                arguments = Bundle().apply {
+                    putString("DOG_BREED", breedName)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
+        return view
+    }
+
+    companion object {
+        fun newInstance(score: Int, breed: String): BCSResultFragment {
+            val fragment = BCSResultFragment()
+            val args = Bundle()
+            args.putInt("FINAL_BCS_SCORE", score)
+            args.putString("DOG_BREED", breed)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
-

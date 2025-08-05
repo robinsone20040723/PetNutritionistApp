@@ -1,15 +1,12 @@
 package com.example.petnutritionistapp
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
+import kotlinx.coroutines.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,32 +15,35 @@ import org.json.JSONObject
 import java.io.IOException
 import android.util.Log
 
-
-class AIAdvisorActivity : AppCompatActivity() {
+class AIAdvisorFragment : Fragment() {
 
     private lateinit var editInput: EditText
     private lateinit var btnSend: Button
     private lateinit var txtResult: TextView
 
     private val client = OkHttpClient()
-    private val apiKey = BuildConfig.OPENAI_API_KEY  // ✅ 從 BuildConfig 取得金鑰
+    private val apiKey = BuildConfig.OPENAI_API_KEY
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ai_advisor)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_ai_advisor, container, false)
 
-        editInput = findViewById(R.id.editInput)
-        btnSend = findViewById(R.id.btnSend)
-        txtResult = findViewById(R.id.txtResult)
+        editInput = view.findViewById(R.id.editInput)
+        btnSend = view.findViewById(R.id.btnSend)
+        txtResult = view.findViewById(R.id.txtResult)
 
         btnSend.setOnClickListener {
             val question = editInput.text.toString().trim()
             if (question.isNotEmpty()) {
                 askAI(question)
             } else {
-                Toast.makeText(this, "請輸入問題", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "請輸入問題", Toast.LENGTH_SHORT).show()
             }
         }
+
+        return view
     }
 
     private fun askAI(question: String) {
@@ -72,7 +72,7 @@ class AIAdvisorActivity : AppCompatActivity() {
         val request = Request.Builder()
             .url(url)
             .header("Authorization", "Bearer $apiKey")
-            .header("Content-Type", "application/json") // ✅ 加上 Content-Type 更保險
+            .header("Content-Type", "application/json")
             .post(body)
             .build()
 
@@ -107,4 +107,3 @@ class AIAdvisorActivity : AppCompatActivity() {
         }
     }
 }
-

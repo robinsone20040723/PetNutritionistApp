@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.math.roundToInt
 
 class PhotoAndTouchInputActivity : AppCompatActivity() {
 
@@ -19,6 +20,39 @@ class PhotoAndTouchInputActivity : AppCompatActivity() {
 
     private val REQUEST_IMAGE_CAPTURE = 1
 
+    private val ribsScoreMap = mapOf(
+        "明顯可摸到肋骨" to 2,
+        "稍微可摸到" to 4,
+        "有脂肪難以摸到" to 7
+    )
+
+    private val waistScoreMap = mapOf(
+        "腰身明顯" to 3,
+        "有點腰身" to 5,
+        "無腰身" to 8
+    )
+
+    private val stomachScoreMap = mapOf(
+        "腹部上提" to 2,
+        "腹部平坦" to 5,
+        "腹部下垂" to 8
+    )
+
+    private fun adjustBCS(imageScore: Int, ribsScore: Int, waistScore: Int, stomachScore: Int): Int {
+        val avgTouchScore = (ribsScore + waistScore + stomachScore) / 3.0
+
+        return when {
+            imageScore <= 3 && avgTouchScore <= 3 -> 1
+            imageScore <= 4 && avgTouchScore <= 4 -> 2
+            imageScore <= 5 && avgTouchScore <= 5 -> 3
+            imageScore == 5 && avgTouchScore in 4.5..5.5 -> 5
+            imageScore >= 8 && avgTouchScore >= 7 -> 9
+            else -> ((imageScore * 2 + ribsScore + waistScore + stomachScore) / 5.0)
+                .roundToInt()
+                .coerceIn(1, 9)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_and_touch_input)
@@ -30,7 +64,6 @@ class PhotoAndTouchInputActivity : AppCompatActivity() {
         spinnerStomach = findViewById(R.id.spinnerStomach)
         btnAnalyze = findViewById(R.id.btnAnalyze)
 
-        // 設定選單選項
         ArrayAdapter.createFromResource(this, R.array.ribs_array, android.R.layout.simple_spinner_item).also {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerRibs.adapter = it
@@ -54,9 +87,25 @@ class PhotoAndTouchInputActivity : AppCompatActivity() {
             val waistChoice = spinnerWaist.selectedItem.toString()
             val stomachChoice = spinnerStomach.selectedItem.toString()
 
-            Toast.makeText(this, "肋骨:$ribChoice\n腰部:$waistChoice\n腹部:$stomachChoice", Toast.LENGTH_LONG).show()
+            val ribsScore = ribsScoreMap[ribChoice] ?: 5
+            val waistScore = waistScoreMap[waistChoice] ?: 5
+            val stomachScore = stomachScoreMap[stomachChoice] ?: 5
 
-            // TODO：這裡你可以加上自訂規則計算出 BCS 分數，並跳轉下一頁
+            val imageScore = 5 // 目前固定，日後接模型替換
+
+            val finalBCS = adjustBCS(imageScore, ribsScore, waistScore, stomachScore)
+
+            Toast.makeText(this, "預測 BCS 分數為：$finalBCS", Toast.LENGTH_LONG).show()
+
+            val breed = intent.getStringExtra("DOG_BREED") ?: ""
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("TARGET_FRAGMENT", "BCS_RESULT")
+            intent.putExtra("FINAL_BCS_SCORE", finalBCS)
+            intent.putExtra("DOG_BREED", breed)
+            startActivity(intent)
+            finish()
+
         }
     }
 
