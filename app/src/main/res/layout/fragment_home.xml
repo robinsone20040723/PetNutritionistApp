@@ -77,6 +77,14 @@
             android:textStyle="bold"
             android:layout_marginTop="24dp"
             android:layout_gravity="center" />
+        <Button
+            android:id="@+id/btnNearbyVet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查看附近的寵物醫院"
+            android:padding="12dp"
+            android:layout_margin="16dp"/>
+
 
     </LinearLayout>
 </ScrollView>

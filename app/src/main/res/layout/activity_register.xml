@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FBE9E7"
@@ -20,35 +21,58 @@
             android:textColor="#5D4037"
             android:layout_marginBottom="24dp"/>
 
-        <EditText
-            android:id="@+id/emailInput"
+        <!-- Email -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:drawableLeft="@android:drawable/ic_dialog_email"
-            android:backgroundTint="#6D4C41"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            app:startIconDrawable="@android:drawable/ic_dialog_email"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="#6D4C41">
 
-        <EditText
-            android:id="@+id/passwordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="密碼"
-            android:inputType="textPassword"
-            android:drawableLeft="@android:drawable/ic_lock_lock"
-            android:backgroundTint="#6D4C41"
-            android:layout_marginBottom="16dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/confirmPasswordInput"
+        <!-- 密碼 -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="再次輸入密碼"
-            android:inputType="textPassword"
-            android:drawableLeft="@android:drawable/ic_lock_lock"
-            android:backgroundTint="#6D4C41"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"
+            app:startIconDrawable="@android:drawable/ic_lock_lock"
+            app:endIconMode="password_toggle"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="#6D4C41">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="密碼"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 再次輸入密碼 -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:startIconDrawable="@android:drawable/ic_lock_lock"
+            app:endIconMode="password_toggle"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="#6D4C41">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="再次輸入密碼"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/registerBtn"
@@ -66,6 +90,6 @@
             android:text="返回登入"
             android:textColor="#FFFFFF"
             android:layout_marginTop="12dp"
-            android:background="@drawable/rounded_button" />
+            android:background="@drawable/rounded_button"/>
     </LinearLayout>
 </ScrollView>

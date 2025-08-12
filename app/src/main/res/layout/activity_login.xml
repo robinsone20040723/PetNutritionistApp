@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D7B2A3"
@@ -29,27 +30,42 @@
             android:layout_marginTop="24dp"
             android:textColor="#3E2723" />
 
-        <!-- Email 輸入 -->
-        <EditText
-            android:id="@+id/emailInput"
+        <!-- Email 輸入（Material） -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:drawableLeft="@android:drawable/ic_dialog_email"
             android:layout_marginTop="24dp"
-            android:backgroundTint="#4E342E" />
+            app:startIconDrawable="@android:drawable/ic_dialog_email"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="#4E342E"
+            app:hintEnabled="true">
 
-        <!-- 密碼輸入 -->
-        <EditText
-            android:id="@+id/passwordInput"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- 密碼輸入（右側眼睛切換） -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="密碼"
-            android:inputType="textPassword"
-            android:drawableLeft="@android:drawable/ic_lock_lock"
             android:layout_marginTop="16dp"
-            android:backgroundTint="#4E342E" />
+            app:startIconDrawable="@android:drawable/ic_lock_lock"
+            app:endIconMode="password_toggle"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeColor="#4E342E"
+            app:hintEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="密碼"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- 登入按鈕 -->
         <Button
