@@ -1,95 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#D7B2A3"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <!-- 背景圖 -->
+    <ImageView
+        android:id="@+id/loginBg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:src="@drawable/login_bg2"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
 
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/dog_sample"
-            android:layout_marginTop="48dp"
-            android:contentDescription="App Logo" />
+    <!-- ScrollView 內容 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
 
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WELCOME BACK"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:textColor="#3E2723" />
-
-        <!-- Email 輸入（Material） -->
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:startIconDrawable="@android:drawable/ic_dialog_email"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="#4E342E"
-            app:hintEnabled="true">
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:minHeight="600dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailInput"
+            <!-- Logo：圓形金毛狗 -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/logoImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/golden_retriever"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="48dp"
+                android:contentDescription="App Logo"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="#FFFFFFFF"
+                app:strokeWidth="2dp" />
+
+            <!-- 標題 -->
+            <TextView
+                android:id="@+id/welcomeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WELCOME BACK"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#5D4037"
+                android:layout_marginTop="24dp" />
+
+            <!-- Email 輸入 -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="32dp"
+                app:startIconDrawable="@android:drawable/ic_dialog_email"
+                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="#FFF3E0"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="#6D4C41">
 
-        <!-- 密碼輸入（右側眼睛切換） -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:startIconDrawable="@android:drawable/ic_lock_lock"
-            app:endIconMode="password_toggle"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeColor="#4E342E"
-            app:hintEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordInput"
+            <!-- 密碼 -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="密碼"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="16dp"
+                app:endIconMode="password_toggle"
+                app:boxBackgroundMode="filled"
+                app:boxBackgroundColor="#FFF3E0"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="#6D4C41">
 
-        <!-- 登入按鈕 -->
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登入"
-            android:textStyle="bold"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/rounded_button"
-            android:textColor="#FFFFFF"
-            android:elevation="4dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="密碼"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- 註冊按鈕 -->
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="註冊"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/rounded_button"
-            android:textColor="#FFFFFF"
-            android:elevation="4dp" />
+            <!-- 登入按鈕 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="登入"
+                android:textSize="16sp"
+                app:cornerRadius="24dp"
+                app:backgroundTint="#6D4C41"
+                android:textColor="#FFFFFF" />
 
-    </LinearLayout>
-</ScrollView>
+            <!-- 註冊按鈕 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="註冊"
+                android:textSize="16sp"
+                app:cornerRadius="24dp"
+                app:backgroundTint="#D7CCC8"
+                android:textColor="#4E342E" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

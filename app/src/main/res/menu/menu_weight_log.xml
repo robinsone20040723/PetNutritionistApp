@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 新增紀錄 -->
+    <item
+        android:id="@+id/action_add_record"
+        android:title="@string/action_add_record"
+        app:showAsAction="ifRoom|withText" />
+    <!-- 若你有圖示可加：android:icon="@drawable/ic_add_24" -->
+
+    <!-- 匯出 -->
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/action_export"
+        app:showAsAction="ifRoom|withText" />
+    <!-- 若你有圖示可加：android:icon="@drawable/ic_file_download_24" -->
+</menu>

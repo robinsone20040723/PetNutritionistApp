@@ -3,6 +3,7 @@ package com.example.petnutritionistapp
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +21,45 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav = findViewById(R.id.bottom_nav)
 
+        // 先確保「有登入的使用者」
+        ensureSignedIn { signedInOk ->
+            if (signedInOk) {
+                initUi()
+            } else {
+                // 登入失敗時，不載入主畫面，提示並允許重試
+                AlertDialog.Builder(this)
+                    .setTitle("登入失敗")
+                    .setMessage("目前無法登入，請確認網路或稍後再試。")
+                    .setPositiveButton("重試") { _, _ ->
+                        ensureSignedIn { ok -> if (ok) initUi() }
+                    }
+                    .setNegativeButton("關閉") { d, _ -> d.dismiss() }
+                    .show()
+            }
+        }
+    }
+
+    /** 確保已登入：若沒有使用者就做匿名登入（只做一次） */
+    private fun ensureSignedIn(done: (Boolean) -> Unit) {
+        val current = auth.currentUser
+        if (current != null) {
+            android.util.Log.d("Auth", "Already signed in: ${current.uid}")
+            done(true)
+            return
+        }
+        auth.signInAnonymously()
+            .addOnSuccessListener {
+                android.util.Log.d("Auth", "Anonymous sign-in success: ${it.user?.uid}")
+                done(true)
+            }
+            .addOnFailureListener { e ->
+                android.util.Log.e("Auth", "Anonymous sign-in failed", e)
+                done(false)
+            }
+    }
+
+    /** 登入後再初始化整個 UI（載入起始 Fragment、設定 BottomNav） */
+    private fun initUi() {
         // ✅ 檢查是否要顯示特定 Fragment（例如從 PhotoAndTouchInputActivity 回來）
         val targetFragment = when (intent.getStringExtra("TARGET_FRAGMENT")) {
             "BCS_RESULT" -> {
@@ -62,19 +103,14 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("確認登出")
             .setMessage("你確定要登出嗎？")
-            .setPositiveButton("是") { _, _ ->
-                performLogout()
-            }
-            .setNegativeButton("否") { dialog, _ ->
-                dialog.dismiss()
-            }
+            .setPositiveButton("是") { _, _ -> performLogout() }
+            .setNegativeButton("否") { dialog, _ -> dialog.dismiss() }
             .create()
             .show()
     }
 
     // 🔐 執行登出動作
     private fun performLogout() {
-        val auth = FirebaseAuth.getInstance()
         auth.signOut()
 
         val sharedPrefs: SharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)

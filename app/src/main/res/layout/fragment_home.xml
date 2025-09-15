@@ -12,79 +12,204 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- 標題文字 -->
+        <!-- 標題 -->
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="狗狗寵物營養師"
+            android:text="@string/app_title"
             android:textSize="28sp"
             android:textColor="#5D4037"
             android:textStyle="bold"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="24dp" />
-
-        <!-- 狗狗圖片 -->
-        <ImageView
-            android:id="@+id/dogImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/dog_sample"
-            android:contentDescription="狗狗圖片"
-            android:layout_marginBottom="32dp" />
-
-        <!-- 認識 BCS 按鈕 -->
-        <Button
-            android:id="@+id/btnBCS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="認識 BCS"
-            android:textColor="#FAF7F7"
-            android:textColorLink="#569AA2"
-            android:textStyle="bold"
-            app:iconTint="#AB3A3A" />
-
-        <!-- 開始分析狗狗 按鈕 -->
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="開始分析狗狗"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/rounded_button"
-            android:textStyle="bold"
-            android:layout_marginBottom="32dp" />
-
-        <!-- AI 顧問 -->
-        <Button
-            android:id="@+id/btnAIAdvisor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AI 顧問"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center" />
-
-        <!-- 登出按鈕 -->
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登出"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/rounded_button"
-            android:textStyle="bold"
             android:layout_marginTop="24dp"
-            android:layout_gravity="center" />
-        <Button
-            android:id="@+id/btnNearbyVet"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 主視覺 -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/dogImage"
+            android:layout_width="166dp"
+            android:layout_height="151dp"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="@string/cd_hero"
+            android:scaleType="centerCrop"
+            android:src="@drawable/samoyed_office"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="#FFFFFFFF" />   <!-- 可選：白色邊框 -->
+
+
+
+        <!-- 功能群（2x2） -->
+        <GridLayout
+            android:id="@+id/featureGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="查看附近的寵物醫院"
-            android:padding="12dp"
-            android:layout_margin="16dp"/>
+            android:columnCount="2"
+            android:rowCount="2"
+            android:alignmentMode="alignMargins"
+            android:useDefaultMargins="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="20dp">
 
+            <!-- 認識 BCS -->
+            <LinearLayout
+                android:id="@+id/itemBCS"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
+
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        app:tint="#FFFFFF"
+                        android:contentDescription="@string/cd_bcs"
+                        android:src="@drawable/ic_bcs" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feature_bcs"
+                    android:textColor="#5D4037"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- AI 顧問 -->
+            <LinearLayout
+                android:id="@+id/itemAI"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
+
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        app:tint="#FFFFFF"
+                        android:contentDescription="@string/cd_ai"
+                        android:src="@drawable/ic_ai" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feature_ai"
+                    android:textColor="#5D4037"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- 記錄體重/BCS（由原「登出」改名與換圖示） -->
+            <!-- 記錄體重 / BCS -->
+            <LinearLayout
+                android:id="@+id/itemRecord"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
+
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle">
+
+                    <!-- 圓內的圖示一定要放在 ImageView，而不是 FrameLayout -->
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        app:tint="#FFFFFF"
+                        android:contentDescription="@string/cd_record"
+                        android:src="@drawable/ic_record" />
+                    <!-- 若暫時沒有 ic_record，可用系統圖示替代：
+                         android:src="@android:drawable/ic_menu_edit" -->
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feature_record"
+                    android:textColor="#5D4037"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+
+            <!-- 附近寵物醫院 -->
+            <LinearLayout
+                android:id="@+id/itemHospital"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
+
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        app:tint="#FFFFFF"
+                        android:contentDescription="@string/cd_hospital"
+                        android:src="@drawable/ic_hospital" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/feature_hospital"
+                    android:textColor="#5D4037"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+        </GridLayout>
+
+        <!-- 底部大橢圓（開始分析狗狗 = AR 互動） -->
+        <TextView
+            android:id="@+id/btnStartAnalyze"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:text="@string/cta_analyze"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/bg_pill_primary"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
 </ScrollView>

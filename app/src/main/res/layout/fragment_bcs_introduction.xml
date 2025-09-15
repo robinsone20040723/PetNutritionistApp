@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF8E1"
     android:padding="16dp">
 
     <LinearLayout
@@ -9,38 +11,77 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- 標題 -->
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="什麼是 BCS？"
-            android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
+            android:textSize="24sp"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="12dp" />
 
-        <TextView
-            android:id="@+id/bcsIntro"
+        <!-- 說明文字卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/introCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="全球小動物獸醫學會（WSAVA）訂定一套體態評分系統（BCS），從過瘦到過胖以 1~9 分作為評分依據，提供飼主自行評估寵物胖瘦狀態。\n\n分數低於 4 分為偏瘦，超過 6 分要注意毛孩可能有過重問題。"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#E0CEC2"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="#FFF3E0"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/bcsIntro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BCS（Body Condition Score，身體狀況評分）是全球小動物獸醫學會（WSAVA）常用的體態評估標準。\n\n它以 1 到 9 分衡量狗狗由過瘦到肥胖的程度，幫助飼主快速判斷毛孩是否在理想體態範圍。\n\n一般來說：\n• 1–3 分代表過瘦（肋骨與脊椎明顯）\n• 4–5 分代表理想（腰身明顯、肋骨可觸但不外露）\n• 6–9 分代表過重至肥胖（腰身不清晰、腹部下垂）\n\n若分數低於 4，代表偏瘦；超過 6，則需注意肥胖相關健康風險。"
+                    android:textColor="#3E2723"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 圖片卡片（可點擊放大） -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imageCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#E0CEC2"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/bcsImage"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:src="@drawable/bcs_chart_wsava"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/cd_bcs_chart" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 下一頁按鈕 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNextPage"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="下一頁（分級說明）"
+            android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
-
-        <ImageView
-            android:id="@+id/bcsImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bcs_chart_wsava"
-            android:adjustViewBounds="true"
-            android:contentDescription="BCS圖表"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:text="BCS 1：肋骨、腰椎骨、骨盆骨以及所有骨頭明顯突起，看不到脂肪，明顯肌肉流失。\n\nBCS 2：肉眼可見肋骨、腰椎骨、骨盆骨，摸不到脂肪，極少量肌肉。\n\nBCS 3：觸診不到脂肪，可清楚看到肋骨與腰椎，身體有明顯凹陷。\n\nBCS 4：肋骨上有極少脂肪包覆，由上方俯視能看到腰身，腹部凹陷明顯。\n\nBCS 5：比例良好，從背後可看到腰身，肋骨僅覆蓋少量脂肪，腹部稍微凹陷。\n\nBCS 6：肋骨上有脂肪覆蓋，腰身不明顯，腹部凹陷仍存在。\n\nBCS 7：肋骨有明顯脂肪堆積，腰椎與尾巴根部脂肪增加，腰身趨近消失。\n\nBCS 8：肋骨上厚脂肪覆蓋，腰與腹部脂肪明顯堆積，腹部變大。\n\nBCS 9：大量脂肪覆蓋胸腔與腰部，幾乎看不到腰身，脂肪堆積到頸部與四肢。" />
-
+            android:textColor="#FFFFFF"
+            app:cornerRadius="28dp"
+            app:backgroundTint="#6D4C41" />
     </LinearLayout>
 </ScrollView>

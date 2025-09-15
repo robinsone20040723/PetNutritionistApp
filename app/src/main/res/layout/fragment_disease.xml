@@ -1,29 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFDE7">
 
-    <!-- 用 LinearLayout 包住文字內容 -->
     <LinearLayout
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 頁面標題 -->
         <TextView
             android:id="@+id/tvDiseaseTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="疾病資料"
-            android:textSize="18sp"
+            android:textColor="#5D4037"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:id="@+id/tvPrevention"
+        <!-- 疾病資訊卡片 -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="預防建議"
-            android:textSize="16sp" />
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#E0CEC2"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="#FFF3E0"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvPrevention"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="預防建議將顯示於此"
+                android:textColor="#3E2723"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:padding="16dp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 預留更多資訊卡片 (可選) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/extraInfoCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#E0CEC2"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvExtraInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="這裡可以放疾病症狀或更多補充資料"
+                android:textSize="15sp"
+                android:textColor="#5D4037"
+                android:lineSpacingExtra="3dp"
+                android:padding="16dp" />
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

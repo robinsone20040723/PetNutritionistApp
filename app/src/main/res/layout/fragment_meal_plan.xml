@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFDE7">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 標題 -->
         <TextView
             android:id="@+id/tvMealTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="建議配餐"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tvMealSuggestion"
+            android:textColor="#5D4037"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 配餐建議卡片（保留） -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="這裡會顯示配餐建議"
-            android:textSize="16sp"
-            android:textColor="#000000" />
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#E0CEC2"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="#FFF3E0">
 
+            <TextView
+                android:id="@+id/tvMealSuggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="這裡會顯示配餐建議"
+                android:textSize="16sp"
+                android:textColor="#3E2723"
+                android:lineSpacingExtra="4dp"
+                android:padding="16dp" />
+        </com.google.android.material.card.MaterialCardView>
 
-
-        <TextView
-            android:id="@+id/tvMealPlan"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

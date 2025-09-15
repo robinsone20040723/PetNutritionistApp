@@ -3,26 +3,26 @@ package com.example.petnutritionistapp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var emailInput: EditText
-    private lateinit var passwordInput: EditText
-    private lateinit var loginBtn: Button
-    private lateinit var registerBtn: Button
+    private lateinit var emailInput: TextInputEditText
+    private lateinit var passwordInput: TextInputEditText
+    private lateinit var loginBtn: MaterialButton
+    private lateinit var registerBtn: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 🔁 如果使用者已登入過，自動跳轉
-        val sharedPrefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val savedEmail = sharedPrefs.getString("user_email", null)
+        // 🔁 已登入就跳過登入頁
+        val savedEmail = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+            .getString("user_email", null)
         if (savedEmail != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
@@ -34,23 +34,22 @@ class LoginActivity : AppCompatActivity() {
 
         emailInput = findViewById(R.id.emailInput)
         passwordInput = findViewById(R.id.passwordInput)
-        loginBtn = findViewById(R.id.loginButton)
-        registerBtn = findViewById(R.id.registerButton)
+        loginBtn = findViewById(R.id.loginButton)           // ← 和 XML 一致
+        registerBtn = findViewById(R.id.registerButton)     // ← 和 XML 一致
 
         loginBtn.setOnClickListener {
-            val email = emailInput.text.toString()
-            val password = passwordInput.text.toString()
+            val email = emailInput.text?.toString()?.trim().orEmpty()
+            val password = passwordInput.text?.toString()?.trim().orEmpty()
 
-            if (email.isBlank() || password.isBlank()) {
+            if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "請填寫帳號與密碼", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // 🔐 Firebase Auth 登入驗證
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    // ✅ 儲存帳號到 SharedPreferences
-                    sharedPrefs.edit().putString("user_email", email).apply()
+                    getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                        .edit().putString("user_email", email).apply()
 
                     Toast.makeText(this, "登入成功", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))

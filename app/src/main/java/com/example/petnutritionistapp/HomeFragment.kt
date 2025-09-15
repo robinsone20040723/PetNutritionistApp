@@ -4,34 +4,24 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit               // ✅ KTX
-import androidx.core.net.toUri               // ✅ KTX
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.auth.FirebaseAuth
+import com.example.petnutritionistapp.WeightLogFragment   // 依實際 package
+
 
 class HomeFragment : Fragment() {
 
-    private lateinit var btnBCS: Button
-    private lateinit var btnStart: Button
-    private lateinit var btnAIAdvisor: Button
-    private lateinit var btnLogout: Button
-    private lateinit var btnNearbyVet: Button
-
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var auth: FirebaseAuth
-
+    // 位置權限
     private val locationPerms = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
@@ -44,53 +34,59 @@ class HomeFragment : Fragment() {
         if (granted) openNearbyVets() else openNearbyVetsWithoutLocation()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
 
-        btnBCS = view.findViewById(R.id.btnBCS)
-        btnStart = view.findViewById(R.id.btnStart)
-        btnAIAdvisor = view.findViewById(R.id.btnAIAdvisor)
-        btnLogout = view.findViewById(R.id.btnLogout)
-        btnNearbyVet = view.findViewById(R.id.btnNearbyVet)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
-        sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", 0)
+        // 對應新版 XML 的 id
+        val itemBCS: View = view.findViewById(R.id.itemBCS)
+        val itemAI: View = view.findViewById(R.id.itemAI)
+        val itemRecord: View = view.findViewById(R.id.itemRecord)      // <- 新增：記錄體重/BCS
+        val itemHospital: View = view.findViewById(R.id.itemHospital)
+        val btnStartAnalyze: View = view.findViewById(R.id.btnStartAnalyze)
 
-        btnBCS.setOnClickListener {
+        // 認識 BCS → 介紹頁
+        itemBCS.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, BCSIntroductionFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
-        btnStart.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, DogInputFragment())
-                .addToBackStack(null)
-                .commit()
-        }
-
-        btnAIAdvisor.setOnClickListener {
+        // AI 顧問
+        itemAI.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AIAdvisorFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
-        btnLogout.setOnClickListener {
-            auth.signOut()
-            // ✅ 使用 KTX，消掉 Lint
-            sharedPreferences.edit { clear() }
-            val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
-            requireActivity().finish()
+        // 記錄體重/BCS（由原登出改成開啟紀錄表單頁）
+        itemRecord.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, WeightLogFragment())
+                .addToBackStack("record_bcs")
+                .commit()
         }
 
-        btnNearbyVet.setOnClickListener { onNearbyVetClick() }
+        // 附近寵物醫院
+        itemHospital.setOnClickListener { onNearbyVetClick() }
 
-        return view
+        // 開始分析狗狗（維持你原本流程）
+        btnStartAnalyze.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, DogInputFragment())
+                .addToBackStack(null)
+                .commit()
+            // 或：startActivity(Intent(requireContext(), PhotoAndTouchInputActivity::class.java))
+        }
     }
 
     private fun onNearbyVetClick() {
@@ -100,7 +96,6 @@ class HomeFragment : Fragment() {
         if (hasPermission) openNearbyVets() else requestPerms.launch(locationPerms)
     }
 
-    // ✅ 再次檢查權限 + 捕捉 SecurityException
     @SuppressLint("MissingPermission")
     private fun openNearbyVets() {
         val ok = locationPerms.any {
@@ -119,7 +114,7 @@ class HomeFragment : Fragment() {
                         val lat = loc.latitude
                         val lng = loc.longitude
                         val query = Uri.encode("寵物醫院")
-                        val uri = "geo:$lat,$lng?q=$query&z=15".toUri()   // ✅ 使用 toUri()
+                        val uri = "geo:$lat,$lng?q=$query&z=15".toUri()
                         openMaps(uri)
                     } else {
                         openNearbyVetsWithoutLocation()
@@ -133,7 +128,7 @@ class HomeFragment : Fragment() {
 
     private fun openNearbyVetsWithoutLocation() {
         val query = Uri.encode("寵物醫院")
-        val uri = "geo:0,0?q=$query".toUri()                                // ✅ 使用 toUri()
+        val uri = "geo:0,0?q=$query".toUri()
         openMaps(uri)
     }
 

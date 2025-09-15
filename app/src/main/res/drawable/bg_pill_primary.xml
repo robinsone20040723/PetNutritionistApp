@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#55FFFFFF"> <!-- ripple 半透明白 -->
+
+    <item>
+        <shape android:shape="rectangle">
+            <!-- 半透明深咖啡 -->
+            <solid android:color="#CC6D4C41" />
+            <corners android:radius="28dp" />
+
+            <!-- 外光效果 -->
+            <stroke android:width="3dp" android:color="#FFFFFFFF" />
+        </shape>
+    </item>
+</ripple>

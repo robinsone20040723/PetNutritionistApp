@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light theme -->
+    <color name="md_theme_light_primary">#6D4C41</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_secondary">#C7B5A8</color>
+    <color name="md_theme_light_surface">#FFF3E0</color>
+    <color name="md_theme_light_onSurface">#3E2723</color>
+    <color name="md_theme_light_background">#FFF8E1</color>
+    <color name="md_theme_light_onBackground">#3E2723</color>
+    <color name="md_theme_light_error">#B3261E</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_tertiary">#8D6E63</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+
+    <!-- Dark theme -->
+    <color name="md_theme_dark_primary">#D7CCC8</color>
+    <color name="md_theme_dark_onPrimary">#3E2723</color>
+    <color name="md_theme_dark_secondary">#8D6E63</color>
+    <color name="md_theme_dark_surface">#121212</color>
+    <color name="md_theme_dark_onSurface">#ECE0DC</color>
+    <color name="md_theme_dark_background">#121212</color>
+    <color name="md_theme_dark_onBackground">#ECE0DC</color>
+    <color name="md_theme_dark_error">#CF6679</color>
+    <color name="md_theme_dark_onError">#000000</color>
+    <color name="md_theme_dark_tertiary">#A1887F</color>
+    <color name="md_theme_dark_onTertiary">#000000</color>
+
+    <!-- Extra accent colors -->
+    <color name="accent_ok">#8D6E63</color>
+    <color name="accent_warn">#E64A19</color>
+    <color name="accent_info">#5D4037</color>
+
+    <!-- UI element colors -->
+    <color name="button_primary">#6D4C41</color>
+    <color name="button_secondary">#C7B5A8</color>
+    <color name="chip_selected">#8D6E63</color>
+    <color name="chip_unselected">#E0CEC2</color>
+</resources>
