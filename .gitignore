@@ -39,3 +39,11 @@ __pycache__/
 # Others
 # =========================
 .env
+# TensorFlow / Keras model files
+*.h5
+# =========================
+# BCS dataset (do not upload images)
+# =========================
+BCS_Model_Trainer/dataset/
+BCS_Model_Trainer/dataset_bcs/
+BCS_Model_Trainer/test_images/
