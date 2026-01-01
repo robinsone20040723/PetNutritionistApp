@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#FFF8E1"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 標題 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="🐶 專屬配餐建議"
+            android:textColor="#5D4037"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- AI 生成內容（可無限延伸） -->
+        <TextView
+            android:id="@+id/tvMealResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:padding="8dp"
+            android:text="AI 產生內容中..."
+            android:textColor="#3E2723"
+            android:textSize="15sp" />
+
+        <!-- 分隔線 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="16dp"
+            android:background="#D7CCC8" />
+
+        <!-- AI 聲明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="⚠️ 本內容由 AI 根據使用者提供資訊與犬隻營養原則生成，僅供飲食建議參考，非醫療診斷，實際狀況仍應諮詢專業獸醫或寵物營養師。"
+            android:textColor="#6D4C41"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>

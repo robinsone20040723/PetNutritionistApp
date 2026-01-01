@@ -7,20 +7,30 @@
     android:padding="20dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:gravity="center_horizontal">
 
         <!-- 標題 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:text="@string/photo_instruction"
             android:textColor="#5D4037"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <!-- 說明文字 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="請拍攝或選擇狗狗的側面或俯視照片，系統將自動分析體態（BCS）"
+            android:textColor="#6D4C41"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center" />
 
         <!-- 影像預覽卡片 -->
         <com.google.android.material.card.MaterialCardView
@@ -36,13 +46,13 @@
             <ImageView
                 android:id="@+id/imgPreview"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="220dp"
                 android:background="#DDD"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/photo_preview_desc"/>
+                android:contentDescription="@string/photo_preview_desc" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 拍照按鈕（主色膠囊） -->
+        <!-- 拍照按鈕（主要） -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTakePhoto"
             android:layout_width="match_parent"
@@ -52,101 +62,36 @@
             android:textColor="#FFFFFF"
             app:cornerRadius="28dp"
             app:backgroundTint="#6D4C41"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="12dp" />
 
-        <!-- 表單卡片（肋骨/腰部/腹部） -->
+        <!-- 從相簿選照片（次要） -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPickPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="從相簿選照片"
+            android:textStyle="bold"
+            android:textColor="#5D4037"
+            app:cornerRadius="28dp"
+            app:backgroundTint="#D7CCC8"
+            android:layout_marginBottom="20dp" />
+
+        <!-- AI 分析提示卡片 -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#E0CEC2"
-            app:strokeWidth="1dp"
+            app:cardElevation="1dp"
             app:cardBackgroundColor="#FFF3E0"
             android:layout_marginBottom="20dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- 肋骨 -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ribs_label"
-                    android:textColor="#6D4C41"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_field"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp">
-
-                    <Spinner
-                        android:id="@+id/spinnerRibs"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:spinnerMode="dropdown" />
-                </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="14dp"/>
-
-                <!-- 腰部 -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/waist_label"
-                    android:textColor="#6D4C41"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_field"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp">
-
-                    <Spinner
-                        android:id="@+id/spinnerWaist"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:spinnerMode="dropdown" />
-                </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="14dp"/>
-
-                <!-- 腹部 -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/stomach_label"
-                    android:textColor="#6D4C41"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_field"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="6dp">
-
-                    <Spinner
-                        android:id="@+id/spinnerStomach"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:spinnerMode="dropdown" />
-                </LinearLayout>
-            </LinearLayout>
+                android:padding="16dp"
+                android:text="🤖 拍照或選擇照片後，AI 將自動判斷狗狗的體態分數（BCS 1–9 分），無需手動輸入。"
+                android:textColor="#6D4C41"
+                android:textSize="14sp" />
         </com.google.android.material.card.MaterialCardView>
 
         <!-- 分析按鈕 -->
@@ -159,6 +104,7 @@
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             app:backgroundTint="#6D4C41"
-            app:cornerRadius="28dp"/>
+            app:cornerRadius="28dp" />
+
     </LinearLayout>
 </ScrollView>

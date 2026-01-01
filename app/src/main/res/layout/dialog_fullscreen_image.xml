@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CC000000">
+    android:background="#000">
 
-    <com.ortiz.touchview.TouchImageView
-        android:id="@+id/fullImage"
+    <ImageView
+        android:id="@+id/fullscreenImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:contentDescription="@string/cd_bcs_chart" />
+        android:contentDescription="fullscreen image" />
 </FrameLayout>

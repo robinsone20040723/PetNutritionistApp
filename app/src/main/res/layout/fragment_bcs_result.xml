@@ -12,7 +12,7 @@
         android:gravity="center_horizontal"
         android:padding="20dp">
 
-        <!-- 圖片卡片 -->
+        <!-- 🐶 狗狗圖片 -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 android:contentDescription="狗狗圖片" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 標題 -->
+        <!-- 📊 BCS 分析結果 -->
         <TextView
             android:id="@+id/tvResult"
             android:layout_width="wrap_content"
@@ -40,9 +40,9 @@
             android:textColor="#5D4037"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="12dp" />
 
-        <!-- 建議內容卡片 -->
+        <!-- 🩺 常見疾病 -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,40 +54,29 @@
             android:layout_marginBottom="20dp">
 
             <TextView
-                android:id="@+id/tvSuggestion"
+                android:id="@+id/tvDiseases"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="這裡會顯示建議內容"
+                android:text="讀取中..."
                 android:textSize="16sp"
                 android:textColor="#3E2723"
                 android:lineSpacingExtra="4dp"
-                android:padding="16dp"/>
+                android:padding="16dp" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 行動按鈕 -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMeal"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="開始配餐"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            app:cornerRadius="28dp"
-            app:backgroundTint="#6D4C41"
-            android:layout_marginBottom="12dp"/>
-
+        <!-- 🔘 查看詳細疾病 -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDisease"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="常見疾病"
+            android:text="查看詳細疾病說明"
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="#6D4C41"
             app:cornerRadius="28dp"
             app:strokeColor="#6D4C41"
             app:strokeWidth="2dp"
-            app:backgroundTint="#00FFFFFF"/>
+            app:backgroundTint="#00FFFFFF" />
+
     </LinearLayout>
 </ScrollView>

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 權限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- Android 13+ 選圖（Photo Picker 不一定需要，但保守留） -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!-- Android 12 及以下選圖 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Android 13+ 選圖（Photo Picker 不一定需要，但保守留） -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> <!-- Android 12 及以下選圖 -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-
-    <!-- 相機硬體標記：false，避免 Play 因沒有相機的裝置被排除 -->
+        android:maxSdkVersion="32" /> <!-- 相機硬體標記：false，避免 Play 因沒有相機的裝置被排除 -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -29,8 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetNutritionistApp"
         tools:targetApi="31">
-
-        <!-- ✅ 只保留真正的 Activity。Fragment 不用註冊 -->
+        <activity
+            android:name=".MealResultFragment"
+            android:exported="false" />
+        <activity
+            android:name=".DogProfileFragment"
+            android:exported="false" /> <!-- ✅ 只保留真正的 Activity。Fragment 不用註冊 -->
         <activity
             android:name=".PhotoAndTouchInputActivity"
             android:exported="false" />
@@ -45,11 +44,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- FileProvider：給相機輸出檔案用 -->
+        </activity> <!-- FileProvider：給相機輸出檔案用 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -59,6 +57,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
+
 </manifest>
