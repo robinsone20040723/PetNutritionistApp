@@ -1,15 +1,41 @@
+# =========================
+# Android / IntelliJ
+# =========================
 *.iml
 .gradle
 /local.properties
+
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+
+# =========================
+# Python / BCS_Model_Trainer
+# =========================
+
+# Python virtual environment (一定不要上 GitHub)
+BCS_Model_Trainer/venv/
+BCS_Model_Trainer/.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code settings (可選)
+.vscode/
+
+# =========================
+# Others
+# =========================
+.env
